@@ -1,16 +1,23 @@
-node {
-    def app
-    stage('Clone repository') {
-        /* Let's make sure we have the repository cloned to our workspace */
+pipeline {
+   agent any
 
-        checkout scm
-    }
-	
-	stage('SonarQube') 
-    {
+   stages {
+      stage('Build') {
+         steps {
+            //Get code from the right branch of the repository
+            git branch: 'myBranch', url: 'https://github.com/awrigh206/coursework_2/'
+             
+         }
+      }
+      
+         
+     stage('SonarQube') 
+     {
         environment {
             scannerHome = tool 'SonarQube'
         }
+        steps 
+        {
             
             withSonarQubeEnv('SonarQube') {
                 sh "${scannerHome}/bin/sonar-scanner"
@@ -18,6 +25,16 @@ node {
             //timeout(time: 10, unit: 'MINUTES') {
              //   waitForQualityGate abortPipeline: true
            // }
+        }
+    }
+   }
+}
+node {
+    def app
+    stage('Clone repository') {
+        /* Let's make sure we have the repository cloned to our workspace */
+
+        checkout scm
     }
 
     stage('Build image') {
