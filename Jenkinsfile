@@ -1,10 +1,26 @@
 node {
     def app
-
     stage('Clone repository') {
         /* Let's make sure we have the repository cloned to our workspace */
 
         checkout scm
+    }
+	
+	stage('SonarQube') 
+    {
+        environment {
+            scannerHome = tool 'SonarQube'
+        }
+        steps 
+        {
+            
+            withSonarQubeEnv('SonarQube') {
+                sh "${scannerHome}/bin/sonar-scanner"
+            }
+            //timeout(time: 10, unit: 'MINUTES') {
+             //   waitForQualityGate abortPipeline: true
+           // }
+        }
     }
 
     stage('Build image') {
