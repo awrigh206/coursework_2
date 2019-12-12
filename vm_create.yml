@@ -1,0 +1,56 @@
+- name: Create Azure VM
+  hosts: localhost
+  connection: local
+
+  vars:
+    myResourceGroup: ansible
+    myVnet: ansible-node-vnet
+    mySubnet: ansible-node-subnet
+    myPublicIP: ansible-node-publicip
+    myNIC: ansible-node-nic
+    myNetworkSecurityGroup: ansible-node-nsg
+    myVM: ansible-node
+    mySSHkey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDbItZqrIRWDJGgugOhiF3IuOZnCSs8BJX2k/+1qy0oPDmlUqdW1daQcOywmjtq3yp7oH0qPMKCV2hq6fm+RCm+JiVJ8VkGwEyROMBf279aJA5gr9IpPnYzn8QJJwABeOpO1BuwBH1cyo9ZnT9UTPdMqh3SbWkCq6Eyu0Mus5WUMJUNp0aV0zO+RZ$
+
+  tasks:
+
+  - name: Create virtual network
+    azure_rm_virtualnetwork:
+      resource_group: "{{ myResourceGroup }}"
+      name: "{{  myVnet }}"
+      address_prefixes: "10.0.0.0/16"
+
+  - name: Add subnet
+    azure_rm_subnet:
+      resource_group: "{{ myResourceGroup }}"
+      name: "{{ mySubnet }}"
+      address_prefix: "10.0.1.0/24"
+      virtual_network: "{{ myVnet }}"
+
+  - name: Create public IP address
+    azure_rm_publicipaddress:
+      resource_group: "{{ myResourceGroup }}"
+      allocation_method: Static
+      name: "{{ myPublicIP }}"
+    register: output_ip_address
+      - name: Create Network Security Group that allows SSH
+    azure_rm_securitygroup::
+      resource_group: "{{ myResourceGroup}}""
+      name: "{{ myNetworkSecurityGroup }}"
+      rules:e: Standard_D2s_v3
+      ad- name: SSHe: azureuser
+      ssh_protocol: Tcpled: false
+      ssh_public_keys:
+        - path: /home/azureuser/.ssh/authorized_keys
+          key_data: "{{mySSHkey}}"
+      network_interfaces: "{{ myNIC }}"
+      image:
+        offer: UbuntuServer
+        publisher: Canonical
+        sku: '16.04-LTS'
+        version: latest
+
+  - name: Print Public IP for VM which will be created
+    debug:
+      msg: "The public IP is {{ output_ip_address.state.ip_address }}."
+
