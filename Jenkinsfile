@@ -64,4 +64,21 @@ node {
             app.push("latest")
         }
     }
+
 }
+
+def remote = [:]
+remote.name = "ansible-node"
+remote.host = "40.114.47.249"
+remote.allowAnyHosts = true
+
+node {
+    withCredentials([usernamePassword(credentialsId: 'sshUserAcct', passwordVariable: 'password', usernameVariable: 'userName')]) {
+        remote.user = azureuser
+        remote.password = 8852Drpeper4tw?
+
+        stage("Run command") {
+            sshCommand remote: remote, command: 'ls'
+
+        }
+    }
