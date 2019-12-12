@@ -72,12 +72,13 @@ node {
 		  remote.user =$user
 		  remote.identity=$id
 		  remote.allowAnyHosts = true
-		}
 		
-		stage('node SSH') 
-		{
-			sshCommand remote:remote, command: "pwd"
+		
+			stage('node SSH') 
+			{
+				sshCommand remote:remote, command: "pwd"
 
+			}
 		}
 	}
 
