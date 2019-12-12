@@ -62,13 +62,13 @@ node {
         }
     }
 	
-	withCredentials([usernamePassword(credentialsId: 'build', passwordVariable: 'password', usernameVariable: 'userName')]) 
+	withCredentials([usernamePassword(credentialsId: 'build', passwordVariable: 'password', usernameVariable: 'user')]) 
 	{
 		def build = [:]
 		  build.name = 'build'
 		  build.host = '52.142.24.253'
-		  build.user = 'awrigh206'
-		  build.password = '8852Drpeper4tw?'
+		  build.user =$password
+		  build.password =$user
 		  build.allowAnyHosts = true
 		  
 		  def node = [:]
@@ -79,7 +79,7 @@ node {
 		  
 		  stage('build SSH') 
 		  {
-			sshCommand build: build, command: "pwd"
+			sshCommand remote: build, command: "pwd"
 		  }
 	}
 
