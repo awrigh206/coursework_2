@@ -1,9 +1,5 @@
 pipeline {
    agent any
-   def remote = [:]
-   remote.name = "ansible-node"
-   remote.host = "40.114.47.249"
-   remote.allowAnyHosts = true
 
    stages {
       stage('Build') {
@@ -35,6 +31,10 @@ pipeline {
 }
 node {
     def app
+   def remote = [:]
+   remote.name = "ansible-node"
+   remote.host = "40.114.47.249"
+   remote.allowAnyHosts = true
     stage('Clone repository') {
         /* Let's make sure we have the repository cloned to our workspace */
 
