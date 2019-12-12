@@ -73,13 +73,12 @@ remote.host = "40.114.47.249"
 remote.allowAnyHosts = true
 
 node {
-    withCredentials([username(usernameVariable: 'azureuser')]) {
-        remote.user = azureuser
 
-        stage("Run command") {
-            sshCommand remote: remote, command: 'minikube start --vm-driver=virtualbox'
-	    sshCommand remote: remote, command: 'kubectl set image deployments/server coursework=awrigh206/coursework:latest'
+	withCredentials([sshUserPrivateKey(credentialsId: '', keyFileVariable: 'user', passphraseVariable: '', usernameVariable: 'azureuser')]) {
+    		stage("Run command") {
+            		sshCommand remote: remote, command: 'minikube start --vm-driver=virtualbox'
+	    		sshCommand remote: remote, command: 'kubectl set image deployments/server coursework=awrigh206/coursework:latest'
 
-        }
-    }
+        	}
+	}
 }
