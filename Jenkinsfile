@@ -73,19 +73,35 @@ node {
 		  build.password =$user
 		  build.allowAnyHosts = true
 		  
-		  def node = [:]
-		  node.name = 'ansibleNode'
-		  node.host = '52.142.24.253'
-		  node.user = 'azureuser'
-		  node.allowAnyHosts = true
+		  
 		  
 		  stage('build SSH') 
 		  {
 			sshCommand remote: build, command: "pwd"
-			sshCommand remote: build, command: ssh azureuser@40.114.47.249"
+
 		  }
+		  
 		}
 		
+	}
+	
+	withCredentials([sshUserPrivateKey(credentialsId: 'user', keyFileVariable: 'id', passphraseVariable: '', usernameVariable: '')]) 
+	{
+		environment
+		{
+			def node = [:]
+			node.name = 'ansibleNode'
+			node.host = '40.114.47.249'
+			node.user = 'azureuser'
+			node.allowAnyHosts = true
+			node.identity=$id
+		}
+		
+		stage('node SSH') 
+		  {
+			sshCommand remote: node, command: "pwd"
+
+		  }
 	}
 
 
