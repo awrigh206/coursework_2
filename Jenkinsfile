@@ -2,7 +2,7 @@ pipeline {
    agent any
 
    stages {
-      stage('Build') {
+      stage('Get files from Github') {
          steps {
             //Get code from the right branch of the repository
             git branch: 'myBranch', url: 'https://github.com/awrigh206/coursework_2/'
@@ -42,8 +42,6 @@ node {
     }
 
     stage('Test image') {
-        /* Ideally, we would run a test framework against our image.
-         * For this example, we're using a Volkswagen-type approach ;-) */
 
         app.inside {
             sh 'echo "Tests passed"'
@@ -51,10 +49,7 @@ node {
     }
 
     stage('Push image') {
-        /* Finally, we'll push the image with two tags:
-         * First, the incremental build number from Jenkins
-         * Second, the 'latest' tag.
-         * Pushing multiple tags is cheap, as all the layers are reused. */
+        /* push the created image onto docker hub so that it can be accessed by other services*/
         docker.withRegistry('https://registry.hub.docker.com/', 'docker-hub-credentials')
 		{
             app.push("${env.BUILD_NUMBER}")
