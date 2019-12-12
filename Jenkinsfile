@@ -73,7 +73,7 @@ remote.host = "40.114.47.249"
 remote.allowAnyHosts = true
 
 node {
-    withCredentials([usernamePassword(credentialsId: 'sshUserAcct', passwordVariable: 'password', usernameVariable: 'userName')]) {
+    withCredentials([usernamePassword(credentialsId: 'azureuser', usernameVariable: 'azureuser')]) {
         remote.user = azureuser
 	remote.password = none
 
