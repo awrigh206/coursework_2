@@ -69,7 +69,7 @@ node {
 		  remote.allowAnyHosts = true
 		
 		
-			stage('node SSH') 
+			stage('Run update on the production VM') 
 			{
 				sshCommand remote:remote, command: "kubectl set image deployments/server coursework=awrigh206/coursework:latest"
 			}
