@@ -61,14 +61,20 @@ node {
             app.push("latest")
         }
     }
-
-    withCredentials([sshUserPrivateKey(credentialsId: 'user', keyFileVariable: 'user', passphraseVariable: '', usernameVariable: 'azureuser')]) {
-        stage("Run command") {
+	
+	withCredentials([usernamePassword(credentialsId: 'build', passwordVariable: 'password', usernameVariable: 'userName')]) 
+	{
+		stage("Run command") {
+			sh "ssh awrigh206@52.142.24.253 -tt"
         	sh "ssh azureuser@40.114.47.249 -tt"
-		sh "minikube start --vm-driver=virtualbox"
-		sh "kubectl set image deployments/server coursework=awrigh206/coursework:latest"
+			sh "minikube start --vm-driver=virtualbox"
+			sh "kubectl set image deployments/server coursework=awrigh206/coursework:latest"
 
         }
+	}
+
+    withCredentials([sshUserPrivateKey(credentialsId: 'user', keyFileVariable: 'user', passphraseVariable: '', usernameVariable: 'azureuser')]) {
+        
 	}
 
 }
