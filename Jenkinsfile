@@ -74,7 +74,7 @@ remote.allowAnyHosts = true
 
 node {
 
-	withCredentials([sshUserPrivateKey(credentialsId: '', keyFileVariable: 'user', passphraseVariable: '', usernameVariable: 'azureuser')]) {
+	withCredentials([sshUserPrivateKey(credentialsId: 'id_rsa', keyFileVariable: 'user', passphraseVariable: '', usernameVariable: 'azureuser')]) {
     		stage("Run command") {
             		sshCommand remote: remote, command: 'minikube start --vm-driver=virtualbox'
 	    		sshCommand remote: remote, command: 'kubectl set image deployments/server coursework=awrigh206/coursework:latest'
