@@ -75,7 +75,7 @@ remote.allowAnyHosts = true
 node {
     withCredentials([usernamePassword(credentialsId: 'sshUserAcct', passwordVariable: 'password', usernameVariable: 'userName')]) {
         remote.user = azureuser
-        remote.password = 8852Drpeper4tw?
+	remote.password = none
 
         stage("Run command") {
             sshCommand remote: remote, command: 'ls'
