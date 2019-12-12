@@ -31,10 +31,7 @@ pipeline {
 }
 node {
     def app
-   def remote = [:]
-   remote.name = "ansible-node"
-   remote.host = "40.114.47.249"
-   remote.allowAnyHosts = true
+
     stage('Clone repository') {
         /* Let's make sure we have the repository cloned to our workspace */
 
@@ -71,8 +68,9 @@ node {
 
     withCredentials([sshUserPrivateKey(credentialsId: 'user', keyFileVariable: 'user', passphraseVariable: '', usernameVariable: 'azureuser')]) {
         stage("Run command") {
-        sshCommand remote: remote, command: 'minikube start --vm-driver=virtualbox'
-	sshCommand remote: remote, command: 'kubectl set image deployments/server coursework=awrigh206/coursework:latest'
+        	sh "ssh azureuser@40.114.47.249"
+		sh "minikube start --vm-driver=virtualbox"
+		sh "kubectl set image deployments/server coursework=awrigh206/coursework:latest"
 
         }
 	}
