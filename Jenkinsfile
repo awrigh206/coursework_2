@@ -76,12 +76,7 @@ node {
 		
 			stage('node SSH') 
 			{
-				sshCommand remote:remote, command: "minikube start --vm-driver=virtualbox"
 				sshCommand remote:remote, command: "kubectl set image deployments/server coursework=awrigh206/coursework:latest"
-				
-				
-
-
 			}
 		}
 	}
