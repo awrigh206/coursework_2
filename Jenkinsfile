@@ -64,7 +64,9 @@ node {
 	
 	withCredentials([usernamePassword(credentialsId: 'build', passwordVariable: 'password', usernameVariable: 'user')]) 
 	{
-		def build = [:]
+		environment
+		{
+			def build = [:]
 		  build.name = 'build'
 		  build.host = '52.142.24.253'
 		  build.user =$password
@@ -81,6 +83,8 @@ node {
 		  {
 			sshCommand remote: build, command: "pwd"
 		  }
+		}
+		
 	}
 
 
