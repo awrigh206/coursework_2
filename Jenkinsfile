@@ -69,8 +69,8 @@ node {
 			def build = [:]
 		  build.name = 'build'
 		  build.host = '52.142.24.253'
-		  build.user =$password
-		  build.password =$user
+		  build.user =$user
+		  build.password =$password
 		  build.allowAnyHosts = true
 		  
 		  
@@ -89,19 +89,19 @@ node {
 	{
 		environment
 		{
-				def node = [:]
-			node.name = 'ansible-Node'
-			node.host = '40.114.47.249'
-			node.user = 'azureuser'
-			node.allowAnyHosts = true
-			node.identity=$id
+			def remote = [:]
+		  remote.name = 'ansible-node'
+		  remote.host = '40.114.47.249'
+		  remote.user =$user
+		  remote.identity=$id
+		  remote.allowAnyHosts = true
 		}
 		
 		stage('node SSH') 
-		  {
-			sshCommand remote:node, command: "pwd"
+		{
+			sshCommand remote:remote, command: "pwd"
 
-		  }
+		}
 	}
 
 
