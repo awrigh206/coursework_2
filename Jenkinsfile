@@ -57,24 +57,28 @@ node {
         }
     }
 	
-	withCredentials([sshUserPrivateKey(credentialsId: 'user', keyFileVariable: 'id', passphraseVariable: '', usernameVariable: 'user')]) 
+	stage('push the update to the production VM')
 	{
-		environment
+		withCredentials([sshUserPrivateKey(credentialsId: 'user', keyFileVariable: 'id', passphraseVariable: '', usernameVariable: 'user')]) 
 		{
-			def remote = [:]
-		  remote.name = 'ansible-node'
-		  remote.host = '40.114.47.249'
-		  remote.user =$user
-		  remote.identity=$id
-		  remote.allowAnyHosts = true
-		
-		
-			stage('Run update on the production VM') 
+			environment
 			{
-				sshCommand remote:remote, command: "kubectl set image deployments/server coursework=awrigh206/coursework:latest"
+				def remote = [:]
+			  remote.name = 'ansible-node'
+			  remote.host = '40.114.47.249'
+			  remote.user =$user
+			  remote.identity=$id
+			  remote.allowAnyHosts = true
+			
+			
+				stage('Run update on the production VM') 
+				{
+					sshCommand remote:remote, command: "kubectl set image deployments/server coursework=awrigh206/coursework:latest"
+				}
 			}
 		}
-	}
+		}
+	
 
 
 
