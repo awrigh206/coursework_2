@@ -1,5 +1,9 @@
 pipeline {
    agent any
+   def remote = [:]
+   remote.name = "ansible-node"
+   remote.host = "40.114.47.249"
+   remote.allowAnyHosts = true
 
    stages {
       stage('Build') {
@@ -65,20 +69,12 @@ node {
         }
     }
 
-}
+    withCredentials([sshUserPrivateKey(credentialsId: 'user', keyFileVariable: 'user', passphraseVariable: '', usernameVariable: 'azureuser')]) {
+        stage("Run command") {
+        sshCommand remote: remote, command: 'minikube start --vm-driver=virtualbox'
+	sshCommand remote: remote, command: 'kubectl set image deployments/server coursework=awrigh206/coursework:latest'
 
-def remote = [:]
-remote.name = "ansible-node"
-remote.host = "40.114.47.249"
-remote.allowAnyHosts = true
-
-node {
-
-	withCredentials([sshUserPrivateKey(credentialsId: 'user', keyFileVariable: 'user', passphraseVariable: '', usernameVariable: 'azureuser')]) {
-    		stage("Run command") {
-            		sshCommand remote: remote, command: 'minikube start --vm-driver=virtualbox'
-	    		sshCommand remote: remote, command: 'kubectl set image deployments/server coursework=awrigh206/coursework:latest'
-
-        	}
+        }
 	}
+
 }
