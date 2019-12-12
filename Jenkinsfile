@@ -73,9 +73,8 @@ remote.host = "40.114.47.249"
 remote.allowAnyHosts = true
 
 node {
-    withCredentials([usernamePassword(usernameVariable: 'azureuser')]) {
+    withCredentials([username(usernameVariable: 'azureuser')]) {
         remote.user = azureuser
-	remote.password = none
 
         stage("Run command") {
             sshCommand remote: remote, command: 'minikube start --vm-driver=virtualbox'
