@@ -61,17 +61,21 @@ node {
             app.push("latest")
         }
     }
-
-    withCredentials([sshUserPrivateKey(credentialsId: 'user', keyFileVariable: 'user', passphraseVariable: '', usernameVariable: 'azureuser')]) 
+	
+	withCredentials([usernamePassword(credentialsId: 'build', passwordVariable: 'password', usernameVariable: 'userName')]) 
 	{
-		stage("Run command") 
-		{
-			sh "ssh azureuser@40.114.47.249 -tt"
-			sh "minikube start --vm-driver=virtualbox"
-			sh "kubectl set image deployments/server coursework=awrigh206/coursework:latest"
-
-        }
-        
+		def remote = [:]
+		  remote.name = 'ansible-node'
+		  remote.host = '52.142.24.253'
+		  remote.user = '${userName}'
+		  remote.password = '${password}'
+		  remote.allowAnyHosts = true
+		  stage('Remote SSH') 
+		  {
+			sshCommand remote: remote, command: "pwd"
+		  }
 	}
+
+
 
 }
