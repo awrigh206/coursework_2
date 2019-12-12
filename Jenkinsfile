@@ -67,8 +67,8 @@ node {
 		def remote = [:]
 		  remote.name = 'build'
 		  remote.host = '52.142.24.253'
-		  remote.user = $userName
-		  remote.password = $password
+		  remote.user = $usernameVariable
+		  remote.password = $passwordVariable
 		  remote.allowAnyHosts = true
 		  stage('Remote SSH') 
 		  {
