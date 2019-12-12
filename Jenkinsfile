@@ -64,15 +64,22 @@ node {
 	
 	withCredentials([usernamePassword(credentialsId: 'build', passwordVariable: 'password', usernameVariable: 'userName')]) 
 	{
-		def remote = [:]
-		  remote.name = 'build'
-		  remote.host = '52.142.24.253'
-		  remote.user = $usernameVariable
-		  remote.password = $passwordVariable
-		  remote.allowAnyHosts = true
-		  stage('Remote SSH') 
+		def build = [:]
+		  build.name = 'build'
+		  build.host = '52.142.24.253'
+		  build.user = 'awrigh206'
+		  build.password = '8852Drpeper4tw?'
+		  build.allowAnyHosts = true
+		  
+		  def node = [:]
+		  node.name = 'ansibleNode'
+		  node.host = '52.142.24.253'
+		  node.user = 'azureuser'
+		  node.allowAnyHosts = true
+		  
+		  stage('build SSH') 
 		  {
-			sshCommand remote: remote, command: "pwd"
+			sshCommand build: build, command: "pwd"
 		  }
 	}
 
