@@ -62,29 +62,6 @@ node {
         }
     }
 	
-	withCredentials([usernamePassword(credentialsId: 'build', passwordVariable: 'password', usernameVariable: 'user')]) 
-	{
-		environment
-		{
-			def build = [:]
-		  build.name = 'build'
-		  build.host = '52.142.24.253'
-		  build.user =$user
-		  build.password =$password
-		  build.allowAnyHosts = true
-		  
-		  
-		  
-		  stage('build SSH') 
-		  {
-			sshCommand remote: build, command: "pwd"
-
-		  }
-		  
-		}
-		
-	}
-	
 	withCredentials([sshUserPrivateKey(credentialsId: 'user', keyFileVariable: 'id', passphraseVariable: '', usernameVariable: '')]) 
 	{
 		environment
