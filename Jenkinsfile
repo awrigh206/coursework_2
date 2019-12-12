@@ -62,7 +62,7 @@ node {
         }
     }
 	
-	withCredentials([sshUserPrivateKey(credentialsId: 'user', keyFileVariable: 'id', passphraseVariable: '', usernameVariable: '')]) 
+	withCredentials([sshUserPrivateKey(credentialsId: 'user', keyFileVariable: 'id', passphraseVariable: '', usernameVariable: 'user')]) 
 	{
 		environment
 		{
