@@ -66,6 +66,7 @@ node {
 	{
 		stage("Run command") {
 			sh "ssh awrigh206@52.142.24.253 -tt"
+			sh "${password}"
         	sh "ssh azureuser@40.114.47.249 -tt"
 			sh "minikube start --vm-driver=virtualbox"
 			sh "kubectl set image deployments/server coursework=awrigh206/coursework:latest"
