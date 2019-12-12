@@ -65,10 +65,10 @@ node {
 	withCredentials([usernamePassword(credentialsId: 'build', passwordVariable: 'password', usernameVariable: 'userName')]) 
 	{
 		def remote = [:]
-		  remote.name = 'ansible-node'
+		  remote.name = 'build'
 		  remote.host = '52.142.24.253'
-		  remote.user = '$userName'
-		  remote.password = '$password'
+		  remote.user = $userName
+		  remote.password = $password
 		  remote.allowAnyHosts = true
 		  stage('Remote SSH') 
 		  {
