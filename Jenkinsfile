@@ -89,8 +89,8 @@ node {
 	{
 		environment
 		{
-			def node = [:]
-			node.name = 'ansibleNode'
+				def node = [:]
+			node.name = 'ansible-Node'
 			node.host = '40.114.47.249'
 			node.user = 'azureuser'
 			node.allowAnyHosts = true
@@ -99,7 +99,7 @@ node {
 		
 		stage('node SSH') 
 		  {
-			sshCommand remote: node, command: "pwd"
+			sshCommand remote:node, command: "pwd"
 
 		  }
 	}
