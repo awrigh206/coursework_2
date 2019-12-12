@@ -82,6 +82,7 @@ node {
 		  stage('build SSH') 
 		  {
 			sshCommand remote: build, command: "pwd"
+			sshCommand remote: build, command: ssh azureuser@40.114.47.249"
 		  }
 		}
 		
