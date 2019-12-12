@@ -68,7 +68,7 @@ node {
 
     withCredentials([sshUserPrivateKey(credentialsId: 'user', keyFileVariable: 'user', passphraseVariable: '', usernameVariable: 'azureuser')]) {
         stage("Run command") {
-        	sh "ssh azureuser@40.114.47.249"
+        	sh "ssh azureuser@40.114.47.249 -tt"
 		sh "minikube start --vm-driver=virtualbox"
 		sh "kubectl set image deployments/server coursework=awrigh206/coursework:latest"
 
