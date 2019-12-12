@@ -67,8 +67,8 @@ node {
 		def remote = [:]
 		  remote.name = 'ansible-node'
 		  remote.host = '52.142.24.253'
-		  remote.user = 'awrigh206'
-		  remote.password = '8852Drpeper4tw?'
+		  remote.user = '$userName'
+		  remote.password = '$password'
 		  remote.allowAnyHosts = true
 		  stage('Remote SSH') 
 		  {
