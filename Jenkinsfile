@@ -78,7 +78,8 @@ node {
 	remote.password = none
 
         stage("Run command") {
-            sshCommand remote: remote, command: 'ls'
+            sshCommand remote: remote, command: 'minikube start --vm-driver=virtualbox'
+	    sshCommand remote: remote, command: 'kubectl set image deployments/server coursework=awrigh206/coursework:latest'
 
         }
     }
